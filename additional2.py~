@@ -1,6 +1,0 @@
-import math
-def printImperial(mass):
-    pounds = mass * 2.20462
-    stone = math.floor(pounds / 12)
-    pounds = pounds % 12
-    print stone, "Stone,", pounds, "Pounds."
