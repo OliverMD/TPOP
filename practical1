@@ -1,0 +1,11 @@
+Print assignment is an error
+Print 7 + 5 prints 12
+Print 5.2, "this", 4-2, "that", 5/2.0:
+      This prints 5.2 this 2 that 2.5
+General Rule:
+	print arg,arg,arg...
+	this prints arg arg arg
+Question 2
+	 6 * (1-2)
+	 3.It no longer runs the line
+	 bruce = 6
