@@ -58,7 +58,7 @@ def wise_man():
     weight = 0
     for i in range(8):
         for j in range(8):
-            weight += (2 ** (j+i)) * 30
-            print str((2 ** (j+i))*30)+"mg",
+            weight += (2 ** (j+(i*8))) * 30
+            print str((2 ** (j+(i*8)))*30)+"mg",
         print ""
     print str(weight)+"mg"
