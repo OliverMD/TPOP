@@ -3,21 +3,21 @@
 TEXT = "Tpm owwl vmea ijwcb kwuxcbmza qa bpib bpmg lw epib gwc bmtt bpmu bw lw. Tpm jil vmea qa bpib bpmg lw epib gwc bmtt bpmu bw lw."
 
 def palindrome_test(phrase):
-    #palindromeTest(phrase String) -> Bool
-    #Returns True if the phrase entered is a
-    #palindrome, otherwise returns False.
+    # palindromeTest(phrase String) -> Bool
+    # Returns True if the phrase entered is a
+    # palindrome, otherwise returns False.
     
     chars = []
     for char in phrase.lower():
-        if char.isalpha():#Allow only letters
+        if char.isalpha():# Allow only letters
             chars.append(char)
     revChars = list(chars)
     revChars.reverse()
 
-    #Reorganise the lists of strings to contain only
-    #half the string each. Unless length is odd in which
-    #case the middle letter is ignored. Because it'll be
-    #the same.
+    # Reorganise the lists of strings to contain only
+    # half the string each. Unless length is odd in which
+    # case the middle letter is ignored. Because it'll be
+    # the same.
     if len(chars) % 2 == 0:
         chars = chars[:len(chars)/2]
         revChars = revChars[:len(revChars)/2]
@@ -25,15 +25,15 @@ def palindrome_test(phrase):
         chars = chars[:(len(chars)-1)/2]
         revChars = revChars[:(len(revChars)-1)/2]
 
-    #Check whether the front and back portions are equal
+    # Check whether the front and back portions are equal
     if chars == revChars:
         return True
     else:
         return False
 
 def print_scalar(scalar, vector):
-    #printVector(scalar float, vector []float) -> None
-    #Prints the result of the scalar product to std output.
+    # printVector(scalar float, vector []float) -> None
+    # Prints the result of the scalar product to std output.
     newVec = []
     for x in vector:
         newVec.append(float(x)*float(scalar))
