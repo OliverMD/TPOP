@@ -1,4 +1,8 @@
-def palindromeTest(phrase):
+
+
+TEXT = "Tpm owwl vmea ijwcb kwuxcbmza qa bpib bpmg lw epib gwc bmtt bpmu bw lw. Tpm jil vmea qa bpib bpmg lw epib gwc bmtt bpmu bw lw."
+
+def palindrome_test(phrase):
     #palindromeTest(phrase String) -> Bool
     #Returns True if the phrase entered is a
     #palindrome, otherwise returns False.
@@ -27,7 +31,7 @@ def palindromeTest(phrase):
     else:
         return False
 
-def printScalar(scalar, vector):
+def print_scalar(scalar, vector):
     #printVector(scalar float, vector []float) -> None
     #Prints the result of the scalar product to std output.
     newVec = []
@@ -37,7 +41,9 @@ def printScalar(scalar, vector):
     return
 
 def printAddVectors(vec1, vec2):
-    #printAddVectors(vec1 []float, vec2 []float) -> None
+    # printAddVectors(vec1 []float, vec2 []float) -> None
+    # Adds vectors vec1 and vec2 and prints result to std
+    # output
     if len(vec1) != len(vec2):
         print "Vectors need to be the same size!"
         return
@@ -48,9 +54,9 @@ def printAddVectors(vec1, vec2):
     return
 
 def caeser_encrypt(text, shift):
-    #caeser_encrypt(text String, shift Int) -> String
-    #Performs a caeser shift on text with the shift shift
-    #and returns the encrypted text.
+    # caeser_encrypt(text String, shift Int) -> String
+    # Performs a caeser shift on text with the shift shift
+    # and returns the encrypted text.
     encText = []
     text = text.lower() # makes things simpler
     for char in text:
@@ -60,12 +66,36 @@ def caeser_encrypt(text, shift):
             encText.append(char)
     return "".join(encText)
 def caeser_decrypt(text, shift):
-    #caeser_decrypt(text String, shift Int) -> String
+    # caeser_decrypt(text String, shift Int) -> String
+    # decrypts text, given the shift it was encrypted
+    # with
     decText = []
     text = text.lower()
-    for char in text:
+    for char in text.lower():
         if char.isalpha():
             decText.append(chr((((ord(char)-97) - shift)%26)+97))
         else:
             decText.append(char)
     return "".join(decText)
+def crack_text():
+    # crack_text() -> None
+    # cracks the text, using quite a hacky
+    # method by storing it in a global var.
+    # Prints cracked text.
+    words = ["in","on","to","by","for","if","then","that","they","but",
+             "open", "go", "and", "do"]
+    results = []
+    for shift in range(27):
+        result = caeser_decrypt(TEXT,shift)
+        print shift, result
+        total_words = 0
+        for word in words:
+            idx = 0
+            while result.find(word,idx) != -1:
+                idx = result.find(word,idx) + 1
+                total_words += 1
+        results.append((total_words,shift))
+    results.sort(key = lambda entry: entry[0])
+    print results
+        
+    
