@@ -3,14 +3,16 @@
 # would be row 0, column 1.
 
 def print_matrix(matrix):
-    # print_matrix(matrix [[float]]) -> None
-    # Prints the matrix in a readable form to the standard
-    # output
+    """ print_matrix(matrix [[float]]) -> None
+     Prints the matrix in a readable form to the standard
+     output """
 
     for row in matrix:
+        
         for elm in row:
             print elm,
             print " "*(5 - len(str(elm))),
+            
         print "\n"
     return
 
@@ -30,14 +32,17 @@ def add_matrix(matrix1, matrix2):
     if len(matrix1) != len(matrix2):
         print "matrices aren't of same dimension!"
         return
+    
     newmat = []
     for row in range(len(matrix1)):
         if len(matrix1[row]) != len(matrix2[row]):
             print "matrices aren't of same dimension!"
             return
+        
         newmat.append([])
         for col in range(len(matrix1[row])):
             newmat[row].append(matrix1[row][col] + matrix2[row][col])
+            
     print_matrix(newmat)
     return
     
