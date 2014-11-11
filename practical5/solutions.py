@@ -80,7 +80,6 @@ def collateData():
         dataFile.readline()
         dataFile.readline()
         lastYearRead = ''
-        data = []
         newData = [0.0, 0.0, 0.0]
         for line in dataFile:
             if line[:4] == lastYearRead:
@@ -90,9 +89,7 @@ def collateData():
                 newData[2] += float(temp[6])
             else:
                 if lastYearRead != '':
-                    data.append(newData)
                     outFile.write(lastYearRead+",{0:.2f},{1:.2f},{2:.2f}\n".format(newData[0], newData[1], newData[2]))
-                    print lastYearRead+",{0:.2f},{1:.2f},{2:.2f}\n".format(newData[0], newData[1], newData[2]),
                 temp = line[:-2].split(',')
                 newData = [float(temp[4]), float(temp[5]) , float(temp[6])]
             lastYearRead = line[:4]
