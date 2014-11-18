@@ -1,6 +1,6 @@
 def printExtendedBasePattern(size, ink, canvas):
     """
-    printBasePattern(size int, ink char, canvas char) -> void
+    printBasePattern(size int, ink char, canvas char) -> None
     Prints a cross pattern to the output, of the form:
     x...x
     .x.x.
@@ -18,7 +18,6 @@ def printExtendedBasePattern(size, ink, canvas):
         #iterate through each line number and print each row.
         text = list(canvas*size)
 
-        
         #With len(canvas) * position we get a better result if the canvas is a
         #multi character string.
         text[len(canvas) * line] = text[len(canvas) * (size-line -1)] = ink
@@ -54,6 +53,7 @@ def advancedDecode(cypher, text):
         for key, val in cypher.iteritems():
             if val == char:
                 ret.append(str(key))
+                break
     print "".join(ret)
 
 advancedDecode(cypherbook, encode(cypherbook,"12"))
