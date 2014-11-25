@@ -20,6 +20,8 @@ class Member:
         self.sName = sName
         self.pCode = pCode
         self.items = items
+    def __repr__(self):
+        return "<Member: uid = " + str(self.uid) + ", " + self.fName + ", " + str(self.items) + ">" 
 class Item:
     """
     class Item:
@@ -41,7 +43,9 @@ class Item:
         self.available = available
         self.uid = uid
         self.loaneeId = loaneeId
-class Store:
+    def __repr__(self):
+        return "<Item: uid  = " + str(self.uid) + ", " + self.title + ", " + str(self.available) + ", " + str(self.loaneeId) + ">"
+class Library:
     """
     class that rerpesents a library that has items for loan by it's members.
     Defines the operations:
@@ -50,52 +54,29 @@ class Store:
      -- addItem: Adds an item to the library
      -- removeItem: Removes an ite from the library.
     """
-    def __init__(self, members= [], items = []):
+    def __init__(self):
         """
-        __init__(self, members [Member], items [Item]) --> Store
-        members: A list of members for the store to be initialised with
-        items: A list of items for the store to be initialised with.
+        __init__(self, members [Member], items [Item]) --> Library
         """
-        self.muid = 0
         self.members = {}
-        for i in members:
-            self.muid = max(self.muid, i.uid)
-            try:
-                self.members[i.uid]
-            except KeyError:
-                self.members[i.uid] = i
-        self.muid += 1
         self.items = {}
-        self.iuid = 0
-        #Most likely searching by title.
-        for i in items:
-            self.iuid = max(self.iuid, i.uid)
-            try:
-                self.items[i.title].append(i)
-            except KeyError:
-                self.items[i.title] = [i]
-        self.iuid += 1
-    def addMember(self, member):
+    def __repr__(self):
+        return "<Library members = " + str(self.members) + "|| items = " + str(self.items) + ">"
+    def add_member(self, member):
         """
         addMember(self, member Member) --> Bool
         member: The member that needs to be added to the library
         
         returns True if succesfully added.
-        returns False if the member is already present.
+        returns False if the member is already present and the member is not added
         """
-        if member.uid != None:
-            try:
-                self.members[member.uid]
-            except:
-                self.members[member.uid] = member
-                return True
+        if member.uid in self.members:
             return False
         else:
-            self.members[self.muid] = member
-            muid += 1
+            self.members[member.uid] = member
             return True
             
-    def addItem(self, item):
+    def add_item(self, item):
         """
         addItem(self, item Item) --> Bool
         item: The item that wants to be added to the library.
@@ -110,7 +91,7 @@ class Store:
             self.items[item.title] = [Item(self.iuid, item.title, item.author, item.media, item.available, item.loaneeId)]
         self.iuid += 1
         return True
-    def removeMember(self, uid):
+    def remove_member(self, uid):
         """
         removeMember(self, uid) --> Bool
         uid: the id of the member to remove from the collection
@@ -123,7 +104,7 @@ class Store:
             return True
         except KeyError:
             return False
-    def removeItem(self, uid = None, title = ""):
+    def remove_item(self, uid = None, title = ""):
         """
         removeItem(self, uid int, title string) --> Bool
         uid: The id of the item to be deleted
@@ -147,7 +128,31 @@ class Store:
             return True
         else:
             return False
-mem1 = Member(0, "Oliver", "Downard", "TN13 2EE")
-mem2 = Member(1, "Jeff", "Hurst", "FG56 6FP")
-item1 = Item(0, "LOL", "LOLCAT", "DVD", True, None)
-store = Store()
+    def borrow_item(self, name , member):
+        if name != None and type(name) == str:
+            try:
+                possItems = self.items[name]
+                for item in possItems:
+                    if item.available == True:
+                        item.available = False
+                        item.loaneeId = member.uid
+                        return item.uid
+                #Here there is not a free item
+                return -1
+            except KeyError:
+                #Item doesn't exist
+                raise ValueError("Name is not valid!")
+
+    def return_item(self, item_id, member):
+        for item in member.items:
+            if item.uid == item_id:
+                items = self.items[item.title]
+                for i in items:
+                    if i.uid == item_id:
+                        i.loaneeId = None
+                        i.available = True
+                        member.items.remove(item)
+                        return True
+        return False
+    def getMembers(self):
+        return [self.members[mem] for mem in self.members]
