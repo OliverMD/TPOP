@@ -24,36 +24,56 @@ def printExtendedBasePattern(size, ink, canvas):
         text[len(canvas) * line] = text[len(canvas) * (size-line -1)] = ink
         
         print "".join(text)
+        
 def printMultipleBasePattern(row,col):
+    """
+    printMultipleBasePattern(row int, col int) -> None
+    Prints a 3X3 cross pattern a (row * col) number of times
+    such that the resulting grid of crosses has row number of
+    rows and col number of columns.
+    """
     for i in range(row*4):
         line = []
         for j in range(col):
+            #Init current line with background char.
             text = list("-"*(4))
+
+            #Given the index of this line change a
+            #background char to an ink char.
             text[i%4] = text[3 - (i%4)] = 'X'
+
+            #Put the correct text in the line proper.
             line[j*4:(j+1)*4] = text
         print "".join(line)
-#printMultipleBasePattern(2,2)
 
-decypherbook = {'0000':8, '0001':1, '0010':0, '0011':9,
- '0100':5, '0101':3, '0110':7, '0111':2,
- '1110':4, '1111':6}
-cypherbook = {8:'0000', 1:'0001', 0:'0010', 9:'0011',
- 5:'0100', 3:'0101', 7:'0110', 2:'0111',
- 4:'1110', 6:'1111'}
 def encode(cypher, text):
+    """
+    encode(cypher {int:string}, text string) -> string
+    Returns a string that has text encoded according to
+    the cypher given by cypher for digits 0...9.
+    """
     chars = list(text)
     ret = []
     for i in chars:
         ret.append(cypher[int(i)])
     return "".join(ret)
-print encode(cypherbook, "12")
+
 def advancedDecode(cypher, text):
+    """
+    advancedDecode(cypher {int:string}, text) -> string
+    Returns the decoded text given the cypher that it was
+    encoded with.
+    """
+    #Seperate text in to chunks of 4 to be decoded.
     chars = [text[4*i:(i*4)+4] for i in range(len(text)/4)]
+    
     ret = []
     for char in chars:
+
+        #Iterate over the map to try and find
+        #matching for current chunk.
         for key, val in cypher.iteritems():
             if val == char:
                 ret.append(str(key))
-    print "".join(ret)
-
-advancedDecode(cypherbook, encode(cypherbook,"12"))
+                break
+    return "".join(ret)
