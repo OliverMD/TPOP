@@ -27,7 +27,7 @@ class Item:
     class Item:
     A class that represents an object that is loanable by the library.
     """
-    def __init__(self, uid, title, author, media, available, loaneeId = None):
+    def __init__(self, uid, title, author, media, available= True, loaneeId = None):
         """
         __init__(self, uid int, title string, author string, media string, available bool, loaneeId int) --> Item
         uid: A unique id that identifies the item in the library.
@@ -86,10 +86,9 @@ class Library:
         doesn't change the Item passed.
         """
         try:
-            self.items[item.title].append(Item(self.iuid, item.title, item.author, item.media, item.available, item.loaneeId))
+            self.items[item.title].append(Item(item.uid, item.title, item.author, item.media, item.available, item.loaneeId))
         except KeyError:
-            self.items[item.title] = [Item(self.iuid, item.title, item.author, item.media, item.available, item.loaneeId)]
-        self.iuid += 1
+            self.items[item.title] = [Item(item.uid, item.title, item.author, item.media, item.available, item.loaneeId)]
         return True
     def remove_member(self, uid):
         """
@@ -136,6 +135,7 @@ class Library:
                     if item.available == True:
                         item.available = False
                         item.loaneeId = member.uid
+                        member.items.append(item.uid)
                         return item.uid
                 #Here there is not a free item
                 return -1
@@ -143,16 +143,23 @@ class Library:
                 #Item doesn't exist
                 raise ValueError("Name is not valid!")
 
-    def return_item(self, item_id, member):
-        for item in member.items:
-            if item.uid == item_id:
-                items = self.items[item.title]
-                for i in items:
-                    if i.uid == item_id:
-                        i.loaneeId = None
-                        i.available = True
-                        member.items.remove(item)
-                        return True
-        return False
+    def return_item(self, item_id):
+        for item in self.items:
+            for i in self.items[item]:
+                if i.uid == item_id:
+                    i.available = True
+                    for j in range(len(self.members[i.loaneeId].items)):
+                        if self.members[i.loaneeId].items[j] == item_id:
+                            del self.members[i.loaneeId].items[j]
+                            break
+                    i.loaneeId = None
     def getMembers(self):
         return [self.members[mem] for mem in self.members]
+lib = Library()
+lib.add_item(Item(0, "TITLE", "AUTHOR", "MEDIA"))
+lib.add_member(Member(0,"NAME", "LNAME", "PostCode"))
+print lib
+bid = lib.borrow_item("TITLE", lib.getMembers()[0])
+print lib
+lib.return_item(bid)
+print lib
