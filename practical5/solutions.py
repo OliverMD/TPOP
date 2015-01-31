@@ -27,7 +27,7 @@ def max_Precipitation(fileName):
         return maxFall
     
 def average_Precipitation(fileName):
-        """
+    """
     average_Precipitation(fileName string) -> float
     Returns the minimum average ffrom all the years recorded
     in the file that fileName refers to in the local directory.

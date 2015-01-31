@@ -84,7 +84,10 @@ def displayMember(member):
     print member.getSurname(),
     print ',  borrowed item(s):', len(member.getBorrowed())
 
-
+def borrowItem(library):
+    name = raw_input("Please enter name of Item to borrow")
+    userId = int(raw_input("Please Enter your user id"))
+    library.borrow_item(name,userId)
 def main():
     while True:
         print "Select the action to be performed:"
