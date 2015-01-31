@@ -51,7 +51,7 @@ def addNewItem(library):
 
         ## Here use YOUR class Item constructor
         try:
-            library.add_item(title, author, media, getUniqueIdentifier(media))
+            library.add_item(Item(title, author, media, getUniqueIdentifier(media)))
             print 'Item added successfully.'
             return
         except Exception as err:

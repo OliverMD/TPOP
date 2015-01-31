@@ -8,7 +8,7 @@ def getMaxPal(maxnum):
     for i in range(90000009, maxnum):
         if isPal(str(i)):
             maxPal = max(maxPal, i)
-    print "Found palindrome:", maxPal
+    #print "Found palindrome:", maxPal
     return maxPal
 def factorPal(num):
     for i in range(0,98):
@@ -21,7 +21,7 @@ def factorPal(num):
                                 if num % (99-l) == 0:
                                     if (99-i) * (99-j) * (99-k) * (99-l) == num:
                                         return (99-i, 99-j, 99-k, 99-l)
-    print "Factors of:", num, "not found, continuing down!"
+    #print "Factors of:", num, "not found, continuing down!"
     #return factorPal(nextPalDown(num))
     return False
 
@@ -42,7 +42,7 @@ def nextPalDown(num):
             a = a -1
     return int(a)
 
-a = nextPalDown(getMaxPal(99**4))
+a = 96055069
 
 #Used loop to avoid hitting recursion limit.
 
