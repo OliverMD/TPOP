@@ -12,6 +12,7 @@ class List:
         self.head = None
         self.tail = None
         self.length = 0
+        
     def insertByElement(self, element):
         """
         Inserts the given element at the front of the list
@@ -27,6 +28,35 @@ class List:
             self.head = node
         self.length += 1
         return True
+
+    def __getitem__(self, idx):
+        return self.findByIndex(idx)
+
+    def __len__(self):
+        return self.length
+
+    def __delitem__(self, idx):
+        self.removeByIndex(idx)
+
+    def append(self, element):
+        """
+        Append an item to the end of the list
+        """
+        node = List._Node(element)
+        self.tail.tail = node
+        self.tail = node
+
+
+    def __repr__(self):
+        ret = []
+
+        head = self.head
+
+        while head != None:
+            ret.append(str(head.val))
+            head = head.tail
+
+        return '[' + ','.join(ret) + ']'
             
     def insertByIndex(self, index, element):
         """
@@ -94,10 +124,13 @@ class List:
             
         if head == None:
             return False
-        else:
+        elif prevHead != None:
             prevHead.tail = head.tail
             self.length -= 1
             return True
+        else:
+            self.head = head.tail
+            self.length -= 1
         
     def findByIndex(self, index):
         """
@@ -184,6 +217,15 @@ class List:
 
         return (maxIdx, maxVal)
 
-if __name__ == "__main__":
+def testBasic():
     list1 = List()
-    list1.insertByElement(34)
+    print list1
+    list1.insertByElement(10)
+    print list1
+    print list1[0]
+    del list1[0]
+    print list1
+    print len(list1)
+
+if __name__ == "__main__":
+    testBasic()
